@@ -2,9 +2,9 @@
 
 namespace PhpLab\Rest\Action;
 
-use PhpLab\Domain\Interfaces\CrudServiceInterface;
 use php7rails\domain\data\GetParams;
 use php7rails\domain\data\Query;
+use PhpLab\Domain\Interfaces\CrudServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,9 +33,10 @@ abstract class BaseAction
         $this->query = $this->forgeQueryFromRequest($request);
     }
 
-    abstract public function run() : JsonResponse;
+    abstract public function run(): JsonResponse;
 
-    private function forgeQueryFromRequest(Request $request) {
+    private function forgeQueryFromRequest(Request $request)
+    {
         $getParams = new GetParams;
         return $getParams->getAllParams($request->query->all());
     }

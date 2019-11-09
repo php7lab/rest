@@ -4,12 +4,12 @@ namespace PhpLab\Rest\Action;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CreateAction extends BaseAction
 {
 
-    public function run() : JsonResponse {
+    public function run(): JsonResponse
+    {
         $response = new JsonResponse;
         $body = $this->request->request->all();
         $entity = $this->service->create($body);

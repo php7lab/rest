@@ -8,7 +8,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ViewAction extends BaseEntityAction
 {
 
-    public function run() : JsonResponse {
+    public function run(): JsonResponse
+    {
         $response = new JsonResponse;
         $entity = $this->service->oneById($this->id, $this->query);
         $serializer = new JsonRestSerializer($response);

@@ -9,7 +9,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexAction extends BaseAction
 {
 
-    public function run() : JsonResponse {
+    public function run(): JsonResponse
+    {
         $response = new JsonResponse;
         $dp = new DataProvider([
             'service' => $this->service,
