@@ -12,7 +12,7 @@ use PhpLab\Rest\Action\UpdateAction;
 use PhpLab\Rest\Action\ViewAction;
 use Symfony\Component\HttpFoundation\Request;
 
-class BaseCrudApiController
+abstract class BaseCrudApiController
 {
 
     /** @var $service object */
