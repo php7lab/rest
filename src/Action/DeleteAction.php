@@ -11,8 +11,12 @@ class DeleteAction extends BaseEntityAction
     public function run(): JsonResponse
     {
         $response = new JsonResponse;
-        $this->service->deleteById($this->id);
-        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+        try {
+            $this->service->deleteById($this->id);
+            $response->setStatusCode(Response::HTTP_NO_CONTENT);
+        } catch (\php7extension\core\exceptions\NotFoundException $e) {
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        }
         return $response;
     }
 

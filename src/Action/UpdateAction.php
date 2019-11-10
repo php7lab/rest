@@ -12,8 +12,12 @@ class UpdateAction extends BaseEntityAction
     {
         $response = new JsonResponse;
         $body = $this->request->request->all();
-        $this->service->updateById($this->id, $body);
-        $response->setStatusCode(Response::HTTP_NO_CONTENT);
+        try {
+            $this->service->updateById($this->id, $body);
+            $response->setStatusCode(Response::HTTP_NO_CONTENT);
+        } catch (\php7extension\core\exceptions\NotFoundException $e) {
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        }
         return $response;
     }
 
