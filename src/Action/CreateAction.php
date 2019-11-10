@@ -21,8 +21,7 @@ class CreateAction extends BaseAction
             $response->setStatusCode(Response::HTTP_CREATED);
             $response->headers->set(HttpHeaderEnum::X_ENTITY_ID, $entity->id);
         } catch (UnprocessibleEntityException $e) {
-            $violations = $e->getErrorCollection();
-            $errorCollection = ValidationHelper::prepareUnprocessible($violations);
+            $errorCollection = $e->getErrorCollection();
             $serializer = new JsonRestSerializer($response);
             $serializer->serialize($errorCollection);
             $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);

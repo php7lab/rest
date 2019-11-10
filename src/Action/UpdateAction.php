@@ -20,8 +20,7 @@ class UpdateAction extends BaseEntityAction
             $this->service->updateById($this->id, $body);
             $response->setStatusCode(Response::HTTP_NO_CONTENT);
         } catch (UnprocessibleEntityException $e) {
-            $violations = $e->getErrorCollection();
-            $errorCollection = ValidationHelper::prepareUnprocessible($violations);
+            $errorCollection = $e->getErrorCollection();
             $serializer = new JsonRestSerializer($response);
             $serializer->serialize($errorCollection);
             $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
