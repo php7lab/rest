@@ -2,8 +2,12 @@
 
 namespace PhpLab\Rest\Action;
 
+use PhpLab\Domain\Traits\UnprocessibleEntityException;
+use PhpLab\Rest\Lib\JsonRestSerializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use php7extension\core\exceptions\NotFoundException;
+use PhpLab\Rest\Helpers\RestRenderHelper;
 
 class UpdateAction extends BaseEntityAction
 {
@@ -15,7 +19,13 @@ class UpdateAction extends BaseEntityAction
         try {
             $this->service->updateById($this->id, $body);
             $response->setStatusCode(Response::HTTP_NO_CONTENT);
-        } catch (\php7extension\core\exceptions\NotFoundException $e) {
+        } catch (UnprocessibleEntityException $e) {
+            $violations = $e->getErrorCollection();
+            $errorCollection = RestRenderHelper::prepareUnprocessible($violations);
+            $serializer = new JsonRestSerializer($response);
+            $serializer->serialize($errorCollection);
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+        } catch (NotFoundException $e) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
         return $response;
