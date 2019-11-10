@@ -10,6 +10,7 @@ use PhpLab\Rest\Action\IndexAction;
 use PhpLab\Rest\Action\OptionsAction;
 use PhpLab\Rest\Action\UpdateAction;
 use PhpLab\Rest\Action\ViewAction;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class BaseCrudApiController
@@ -42,7 +43,7 @@ abstract class BaseCrudApiController
         ];
     }
 
-    public function index(Request $request)
+    public function index(Request $request) : JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['index']['class'];
@@ -51,7 +52,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function create(Request $request)
+    public function create(Request $request) : JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['create']['class'];
@@ -60,7 +61,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function view($id, Request $request)
+    public function view($id, Request $request) : JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['view']['class'];
@@ -69,7 +70,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function update($id, Request $request)
+    public function update($id, Request $request) : JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['update']['class'];
@@ -78,7 +79,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function delete($id, Request $request)
+    public function delete($id, Request $request) : JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['delete']['class'];
@@ -87,7 +88,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function options(Request $request)
+    public function options(Request $request) : JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['options']['class'];
