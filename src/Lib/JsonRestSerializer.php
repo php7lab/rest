@@ -18,6 +18,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 class JsonRestSerializer
 {
 
@@ -77,25 +86,18 @@ class JsonRestSerializer
     public function serialize($data)
     {
         $data = $this->encodeData($data);
-        $this->response->setData($data);
+        $this->response->setContent($data);
     }
 
     public function encodeData($data)
     {
-        /*$serializer = \JMS\Serializer\SerializerBuilder::create()->build();
-        $data = $serializer->serialize($data, 'json');
-        $this->response->setContent($data);*/
 
-        $arraySerializer = new ArraySerializer($this->serializerHandlers);
-        $closure = function ($value) use ($arraySerializer) {
-            return $arraySerializer->toArray($value);
-        };
-        if ($data instanceof Collection) {
-            $data = $data->map($closure)->all();
-        } elseif (is_array($data) || is_object($data)) {
-            $data = $closure($data);
-        }
-        return $data;
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter)];
+
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($data, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['createdAt']]);
+        return $jsonContent;
     }
 
 }
