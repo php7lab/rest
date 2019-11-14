@@ -19,7 +19,7 @@ class CreateAction extends BaseAction
         try {
             $entity = $this->service->create($body);
             $response->setStatusCode(Response::HTTP_CREATED);
-            $response->headers->set(HttpHeaderEnum::X_ENTITY_ID, $entity->id);
+            $response->headers->set(HttpHeaderEnum::X_ENTITY_ID, $entity->getId());
         } catch (UnprocessibleEntityException $e) {
             $errorCollection = $e->getErrorCollection();
             $serializer = new JsonRestSerializer($response);
