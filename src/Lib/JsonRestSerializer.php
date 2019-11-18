@@ -10,6 +10,7 @@ use PhpLab\Domain\Data\ArraySerializerHandlers\ArrayHandler;
 use PhpLab\Domain\Data\ArraySerializerHandlers\ObjectHandler;
 use PhpLab\Domain\Data\Collection;
 use PhpLab\Domain\Data\DataProviderEntity;
+use PhpLab\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Rest\Entity\ExceptionEntity;
 use PhpLab\Rest\Lib\ArraySerializerHandlers\TimeHandler;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -26,6 +27,7 @@ use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use PhpLab\Domain\Exceptions\UnauthorizedException;
 
 class JsonRestSerializer
 {
@@ -34,6 +36,8 @@ class JsonRestSerializer
         NotFoundHttpException::class => 404,
         NotFoundException::class => 404,
         MethodNotAllowedHttpException::class => 405,
+        UnprocessibleEntityException::class => 422,
+        UnauthorizedException::class => 403,
     ];
 
     private $serializerHandlers = [
