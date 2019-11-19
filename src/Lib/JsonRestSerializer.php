@@ -25,6 +25,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use PhpLab\Domain\Exceptions\UnauthorizedException;
@@ -95,12 +96,14 @@ class JsonRestSerializer
 
     public function encodeData($data)
     {
-
+        $context = [
+            //AbstractNormalizer::IGNORED_ATTRIBUTES => ['createdAt']
+        ];
         $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter)];
+        $normalizers = [new DateTimeNormalizer(), new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter)];
 
         $serializer = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($data, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['createdAt']]);
+        $jsonContent = $serializer->serialize($data, 'json', $context);
         return $jsonContent;
     }
 
