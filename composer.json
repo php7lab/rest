@@ -9,6 +9,10 @@
 		}
 	],
 	"minimum-stability": "dev",
+	"require": {
+		"friendsofsymfony/rest-bundle": "^2.5",
+		"jms/serializer-bundle": "^3.4"
+	},
 	"autoload": {
 		"psr-4": {
 			"PhpLab\\Rest\\": "src",
