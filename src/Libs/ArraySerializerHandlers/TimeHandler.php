@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpLab\Rest\Lib\ArraySerializerHandlers;
+namespace PhpLab\Rest\Libs\ArraySerializerHandlers;
 
 use DateTime;
 use PhpLab\Domain\Data\ArraySerializer;

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpLab\Rest\Lib;
+namespace PhpLab\Rest\Libs;
 
 use php7extension\core\exceptions\NotFoundException;
 use php7extension\core\web\enums\HttpHeaderEnum;
@@ -11,8 +11,8 @@ use PhpLab\Domain\Data\ArraySerializerHandlers\ObjectHandler;
 use PhpLab\Domain\Data\Collection;
 use PhpLab\Domain\Data\DataProviderEntity;
 use PhpLab\Domain\Exceptions\UnprocessibleEntityException;
-use PhpLab\Rest\Entity\ExceptionEntity;
-use PhpLab\Rest\Lib\ArraySerializerHandlers\TimeHandler;
+use PhpLab\Rest\Entities\ExceptionEntity;
+use PhpLab\Rest\Libs\ArraySerializerHandlers\TimeHandler;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

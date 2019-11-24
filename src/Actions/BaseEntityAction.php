@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpLab\Rest\Action;
+namespace PhpLab\Rest\Actions;
 
 use PhpLab\Domain\Interfaces\CrudServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class BaseEntityAction
- * @package PhpLab\Rest\Action
+ * @package PhpLab\Rest\Actions
  *
  * @property CrudServiceInterface $service
  */

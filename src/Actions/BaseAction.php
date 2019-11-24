@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpLab\Rest\Action;
+namespace PhpLab\Rest\Actions;
 
 use php7rails\domain\data\GetParams;
 use php7rails\domain\data\Query;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class BaseAction
- * @package PhpLab\Rest\Action
+ * @package PhpLab\Rest\Actions
  *
  * @property CrudServiceInterface $service
  */

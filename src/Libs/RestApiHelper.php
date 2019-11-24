@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpLab\Rest\Lib;
+namespace PhpLab\Rest\Libs;
 
 class RestApiHelper
 {

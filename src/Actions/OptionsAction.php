@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpLab\Rest\Action;
+namespace PhpLab\Rest\Actions;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace PhpLab\Rest\Action;
+namespace PhpLab\Rest\Actions;
 
+use php7extension\core\web\enums\HttpHeaderEnum;
 use PhpLab\Domain\Exceptions\UnprocessibleEntityException;
-use PhpLab\Domain\Helper\ValidationHelper;
-use PhpLab\Rest\Lib\JsonRestSerializer;
+use PhpLab\Domain\Helpers\ValidationHelper;
+use PhpLab\Rest\Libs\JsonRestSerializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use php7extension\core\exceptions\NotFoundException;
 
-class UpdateAction extends BaseEntityAction
+class CreateAction extends BaseAction
 {
 
     public function run(): JsonResponse
@@ -17,16 +17,18 @@ class UpdateAction extends BaseEntityAction
         $response = new JsonResponse;
         $body = $this->request->request->all();
         try {
-            $this->service->updateById($this->id, $body);
-            $response->setStatusCode(Response::HTTP_NO_CONTENT);
+            $entity = $this->service->create($body);
+            $response->setStatusCode(Response::HTTP_CREATED);
+            $response->headers->set(HttpHeaderEnum::X_ENTITY_ID, $entity->getId());
         } catch (UnprocessibleEntityException $e) {
             $errorCollection = $e->getErrorCollection();
             $serializer = new JsonRestSerializer($response);
             $serializer->serialize($errorCollection);
             $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
-        } catch (NotFoundException $e) {
-            $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
+
+        //$location = $this->generateUrl('app_crud_view', ['id', 3], UrlGeneratorInterface::ABSOLUTE_URL);
+        //$response->headers->set('Location', $location);
         return $response;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpLab\Rest\Entity;
+namespace PhpLab\Rest\Entities;
 
 class ExceptionEntity
 {

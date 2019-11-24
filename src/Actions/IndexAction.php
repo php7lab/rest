@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpLab\Rest\Action;
+namespace PhpLab\Rest\Actions;
 
 use PhpLab\Domain\Data\DataProvider;
-use PhpLab\Rest\Lib\JsonRestSerializer;
+use PhpLab\Rest\Libs\JsonRestSerializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexAction extends BaseAction

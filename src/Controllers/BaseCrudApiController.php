@@ -1,15 +1,15 @@
 <?php
 
-namespace PhpLab\Rest\Controller;
+namespace PhpLab\Rest\Controllers;
 
-use PhpLab\Rest\Action\BaseAction;
-use PhpLab\Rest\Action\BaseEntityAction;
-use PhpLab\Rest\Action\CreateAction;
-use PhpLab\Rest\Action\DeleteAction;
-use PhpLab\Rest\Action\IndexAction;
-use PhpLab\Rest\Action\OptionsAction;
-use PhpLab\Rest\Action\UpdateAction;
-use PhpLab\Rest\Action\ViewAction;
+use PhpLab\Rest\Actions\BaseAction;
+use PhpLab\Rest\Actions\BaseEntityAction;
+use PhpLab\Rest\Actions\CreateAction;
+use PhpLab\Rest\Actions\DeleteAction;
+use PhpLab\Rest\Actions\IndexAction;
+use PhpLab\Rest\Actions\OptionsAction;
+use PhpLab\Rest\Actions\UpdateAction;
+use PhpLab\Rest\Actions\ViewAction;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

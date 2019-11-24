@@ -1,21 +1,19 @@
 <?php
 
-namespace PhpLab\Rest\Action;
+namespace PhpLab\Rest\Actions;
 
-use PhpLab\Rest\Lib\JsonRestSerializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class ViewAction extends BaseEntityAction
+class DeleteAction extends BaseEntityAction
 {
 
     public function run(): JsonResponse
     {
         $response = new JsonResponse;
         try {
-            $entity = $this->service->oneById($this->id, $this->query);
-            $serializer = new JsonRestSerializer($response);
-            $serializer->serialize($entity);
+            $this->service->deleteById($this->id);
+            $response->setStatusCode(Response::HTTP_NO_CONTENT);
         } catch (\php7extension\core\exceptions\NotFoundException $e) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
