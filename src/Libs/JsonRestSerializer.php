@@ -38,7 +38,7 @@ class JsonRestSerializer
         NotFoundException::class => 404,
         MethodNotAllowedHttpException::class => 405,
         UnprocessibleEntityException::class => 422,
-        UnauthorizedException::class => 403,
+        UnauthorizedException::class => 401
     ];
 
     private $serializerHandlers = [
