@@ -8,7 +8,7 @@ use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Domain\Data\ArraySerializer;
 use PhpLab\Domain\Data\ArraySerializerHandlers\ArrayHandler;
 use PhpLab\Domain\Data\ArraySerializerHandlers\ObjectHandler;
-use PhpLab\Domain\Data\Collection;
+use Illuminate\Support\Collection;
 use PhpLab\Domain\Data\DataProviderEntity;
 use PhpLab\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Rest\Entities\ExceptionEntity;
