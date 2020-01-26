@@ -3,6 +3,7 @@
 namespace PhpLab\Rest\Actions;
 
 use PhpLab\Domain\Exceptions\UnprocessibleEntityException;
+use PhpLab\Rest\Base\BaseAction;
 use PhpLab\Rest\Libs\JsonRestSerializer;
 use PhpLab\Sandbox\Web\Enums\HttpHeaderEnum;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -3,6 +3,7 @@
 namespace PhpLab\Rest\Actions;
 
 use PhpLab\Domain\Data\DataProvider;
+use PhpLab\Rest\Base\BaseAction;
 use PhpLab\Rest\Libs\JsonRestSerializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 

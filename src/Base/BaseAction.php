@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpLab\Rest\Actions;
+namespace PhpLab\Rest\Base;
 
 use PhpLab\Domain\Data\Query;
 use PhpLab\Domain\Interfaces\Service\CrudServiceInterface;

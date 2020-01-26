@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpLab\Rest\Controllers;
+namespace PhpLab\Rest\Base;
 
-use PhpLab\Rest\Actions\BaseAction;
+use PhpLab\Rest\Base\BaseAction;
 use PhpLab\Rest\Actions\BaseEntityAction;
 use PhpLab\Rest\Actions\CreateAction;
 use PhpLab\Rest\Actions\DeleteAction;
