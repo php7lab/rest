@@ -2,8 +2,8 @@
 
 namespace PhpLab\Rest\Libs;
 
-use php7extension\core\exceptions\NotFoundException;
-use php7extension\core\web\enums\HttpHeaderEnum;
+use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
+use PhpLab\Sandbox\Web\Enums\HttpHeaderEnum;
 use php7extension\yii\helpers\ArrayHelper;
 use PhpLab\Domain\Data\ArraySerializer;
 use PhpLab\Domain\Data\ArraySerializerHandlers\ArrayHandler;

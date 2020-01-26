@@ -7,7 +7,7 @@ use PhpLab\Domain\Helpers\ValidationHelper;
 use PhpLab\Rest\Libs\JsonRestSerializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use php7extension\core\exceptions\NotFoundException;
+use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
 
 class UpdateAction extends BaseEntityAction
 {

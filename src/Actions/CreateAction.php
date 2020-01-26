@@ -2,7 +2,7 @@
 
 namespace PhpLab\Rest\Actions;
 
-use php7extension\core\web\enums\HttpHeaderEnum;
+use PhpLab\Sandbox\Web\Enums\HttpHeaderEnum;
 use PhpLab\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Domain\Helpers\ValidationHelper;
 use PhpLab\Rest\Libs\JsonRestSerializer;

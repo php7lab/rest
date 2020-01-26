@@ -14,7 +14,7 @@ class DeleteAction extends BaseEntityAction
         try {
             $this->service->deleteById($this->id);
             $response->setStatusCode(Response::HTTP_NO_CONTENT);
-        } catch (\php7extension\core\exceptions\NotFoundException $e) {
+        } catch (\PhpLab\Sandbox\Common\Exceptions\NotFoundException $e) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
         return $response;

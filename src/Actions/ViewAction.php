@@ -16,7 +16,7 @@ class ViewAction extends BaseEntityAction
             $entity = $this->service->oneById($this->id, $this->query);
             $serializer = new JsonRestSerializer($response);
             $serializer->serialize($entity);
-        } catch (\php7extension\core\exceptions\NotFoundException $e) {
+        } catch (\PhpLab\Sandbox\Common\Exceptions\NotFoundException $e) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
         return $response;
