@@ -2,33 +2,27 @@
 
 namespace PhpLab\Rest\Libs;
 
-use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
-use PhpLab\Sandbox\Web\Enums\HttpHeaderEnum;
 use php7extension\yii\helpers\ArrayHelper;
-use PhpLab\Domain\Data\ArraySerializer;
 use PhpLab\Domain\Data\ArraySerializerHandlers\ArrayHandler;
 use PhpLab\Domain\Data\ArraySerializerHandlers\ObjectHandler;
-use Illuminate\Support\Collection;
 use PhpLab\Domain\Data\DataProviderEntity;
+use PhpLab\Domain\Exceptions\UnauthorizedException;
 use PhpLab\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Rest\Entities\ExceptionEntity;
 use PhpLab\Rest\Libs\ArraySerializerHandlers\TimeHandler;
+use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
+use PhpLab\Sandbox\Web\Enums\HttpHeaderEnum;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use PhpLab\Domain\Exceptions\UnauthorizedException;
 
 class JsonRestSerializer
 {

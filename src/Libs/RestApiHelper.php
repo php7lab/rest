@@ -9,7 +9,7 @@ class RestApiHelper
     {
         $uri = trim($uri, '/');
         $isApi = preg_match('/^api\/v(\d+)\//', $uri, $matches);
-        if (!$isApi) {
+        if ( ! $isApi) {
             return false;
         }
         return $matches[1];

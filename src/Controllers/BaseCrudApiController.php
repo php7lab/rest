@@ -43,7 +43,7 @@ abstract class BaseCrudApiController
         ];
     }
 
-    public function index(Request $request) : JsonResponse
+    public function index(Request $request): JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['index']['class'];
@@ -52,7 +52,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function create(Request $request) : JsonResponse
+    public function create(Request $request): JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['create']['class'];
@@ -61,7 +61,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function view($id, Request $request) : JsonResponse
+    public function view($id, Request $request): JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['view']['class'];
@@ -70,7 +70,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function update($id, Request $request) : JsonResponse
+    public function update($id, Request $request): JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['update']['class'];
@@ -79,7 +79,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function delete($id, Request $request) : JsonResponse
+    public function delete($id, Request $request): JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['delete']['class'];
@@ -88,7 +88,7 @@ abstract class BaseCrudApiController
         return $action->run();
     }
 
-    public function options(Request $request) : JsonResponse
+    public function options(Request $request): JsonResponse
     {
         $actions = $this->actions();
         $actionClass = $actions['options']['class'];

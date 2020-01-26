@@ -44,11 +44,13 @@ class ValidateErrorEntity
     }
 
 
-    public function setViolation(ConstraintViolationInterface $violation) {
+    public function setViolation(ConstraintViolationInterface $violation)
+    {
         $this->violation = $violation;
     }
 
-    public function getViolation() {
+    public function getViolation()
+    {
         return $this->violation;
     }
 
