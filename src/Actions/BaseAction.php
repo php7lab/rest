@@ -3,7 +3,7 @@
 namespace PhpLab\Rest\Actions;
 
 use PhpLab\Domain\Data\Query;
-use PhpLab\Domain\Interfaces\CrudServiceInterface;
+use PhpLab\Domain\Interfaces\Service\CrudServiceInterface;
 use PhpLab\Domain\Libs\GetParams;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
