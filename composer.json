@@ -1,22 +1,22 @@
 {
-	"name": "php7lab/rest",
-	"type": "extension",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Yamshikov Vitaliy",
-			"email": "theyamshikov@yandex.ru"
-		}
-	],
-	"minimum-stability": "dev",
-	"require": {
-		"friendsofsymfony/rest-bundle": "^2.5",
-		"jms/serializer-bundle": "^3.4"
-	},
-	"autoload": {
-		"psr-4": {
-			"PhpLab\\Rest\\": "src",
-			"PhpLab\\Rest\\Tests\\": "tests"
-		}
-	}
+  "name": "php7lab/rest",
+  "type": "extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yamshikov Vitaliy",
+      "email": "theyamshikov@yandex.ru"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "friendsofsymfony/rest-bundle": "^2.5",
+    "jms/serializer-bundle": "^3.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhpLab\\Rest\\": "src",
+      "PhpLab\\Rest\\Tests\\": "tests"
+    }
+  }
 }
