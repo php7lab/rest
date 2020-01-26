@@ -2,8 +2,8 @@
 
 namespace PhpLab\Rest\Actions;
 
-use php7rails\domain\data\GetParams;
-use php7rails\domain\data\Query;
+use PhpLab\Domain\Libs\GetParams;
+use PhpLab\Domain\Data\Query;
 use PhpLab\Domain\Interfaces\CrudServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
