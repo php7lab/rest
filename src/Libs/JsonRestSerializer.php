@@ -74,11 +74,11 @@ class JsonRestSerializer
 
     public function serializeDataProviderEntity(DataProviderEntity $entity)
     {
-        $this->serialize($entity->collection);
-        $this->response->headers->set(HttpHeaderEnum::PER_PAGE, $entity->pageSize);
-        $this->response->headers->set(HttpHeaderEnum::PAGE_COUNT, $entity->pageCount);
-        $this->response->headers->set(HttpHeaderEnum::TOTAL_COUNT, $entity->totalCount);
-        $this->response->headers->set(HttpHeaderEnum::CURRENT_PAGE, $entity->page);
+        $this->serialize($entity->getCollection());
+        $this->response->headers->set(HttpHeaderEnum::PER_PAGE, $entity->getPageSize());
+        $this->response->headers->set(HttpHeaderEnum::PAGE_COUNT, $entity->getPageCount());
+        $this->response->headers->set(HttpHeaderEnum::TOTAL_COUNT, $entity->getTotalCount());
+        $this->response->headers->set(HttpHeaderEnum::CURRENT_PAGE, $entity->getPage());
         return $this;
     }
 
