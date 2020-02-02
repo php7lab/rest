@@ -11,6 +11,7 @@
   "minimum-stability": "dev",
   "require": {
     "friendsofsymfony/rest-bundle": "^2.5",
+    "symfony/http-client": "4.*",
     "jms/serializer-bundle": "^3.4"
   },
   "autoload": {
