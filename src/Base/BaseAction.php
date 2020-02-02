@@ -2,9 +2,9 @@
 
 namespace PhpLab\Rest\Base;
 
-use PhpLab\Core\Domain\Data\Query;
+use PhpLab\Core\Domain\Helpers\QueryHelper;
+use PhpLab\Core\Domain\Libs\Query;
 use PhpLab\Core\Domain\Interfaces\Service\CrudServiceInterface;
-use PhpLab\Core\Domain\Libs\GetParams;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -37,8 +37,7 @@ abstract class BaseAction
 
     private function forgeQueryFromRequest(Request $request)
     {
-        $getParams = new GetParams;
-        return $getParams->getAllParams($request->query->all());
+        return QueryHelper::getAllParams($request->query->all());
     }
 
 }
