@@ -2,9 +2,9 @@
 
 namespace PhpLab\Rest\Base;
 
-use PhpLab\Domain\Data\Query;
-use PhpLab\Domain\Interfaces\Service\CrudServiceInterface;
-use PhpLab\Domain\Libs\GetParams;
+use PhpLab\Core\Domain\Data\Query;
+use PhpLab\Core\Domain\Interfaces\Service\CrudServiceInterface;
+use PhpLab\Core\Domain\Libs\GetParams;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -3,15 +3,15 @@
 namespace PhpLab\Rest\Libs;
 
 use php7extension\yii\helpers\ArrayHelper;
-use PhpLab\Domain\Data\ArraySerializerHandlers\ArrayHandler;
-use PhpLab\Domain\Data\ArraySerializerHandlers\ObjectHandler;
-use PhpLab\Domain\Data\DataProviderEntity;
-use PhpLab\Domain\Exceptions\UnprocessibleEntityException;
+use PhpLab\Core\Domain\Data\ArraySerializerHandlers\ArrayHandler;
+use PhpLab\Core\Domain\Data\ArraySerializerHandlers\ObjectHandler;
+use PhpLab\Core\Domain\Data\DataProviderEntity;
+use PhpLab\Core\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Rest\Entities\ExceptionEntity;
 use PhpLab\Rest\Libs\ArraySerializerHandlers\TimeHandler;
-use PhpLab\Sandbox\Common\Exceptions\NotFoundException;
+use PhpLab\Core\Common\Exceptions\NotFoundException;
 use PhpLab\Sandbox\User\Domain\Exceptions\UnauthorizedException;
-use PhpLab\Sandbox\Web\Enums\HttpHeaderEnum;
+use PhpLab\Core\Web\Enums\HttpHeaderEnum;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,7 +2,7 @@
 
 namespace PhpLab\Rest\Actions;
 
-use PhpLab\Domain\Interfaces\Service\CrudServiceInterface;
+use PhpLab\Core\Domain\Interfaces\Service\CrudServiceInterface;
 use PhpLab\Rest\Base\BaseAction;
 use Symfony\Component\HttpFoundation\Request;
 

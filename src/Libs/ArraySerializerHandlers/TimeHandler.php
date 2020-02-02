@@ -3,8 +3,8 @@
 namespace PhpLab\Rest\Libs\ArraySerializerHandlers;
 
 use DateTime;
-use PhpLab\Domain\Data\ArraySerializer;
-use PhpLab\Domain\Data\ArraySerializerHandlers\SerializerHandlerInterface;
+use PhpLab\Core\Domain\Data\ArraySerializer;
+use PhpLab\Core\Domain\Data\ArraySerializerHandlers\SerializerHandlerInterface;
 
 class TimeHandler implements SerializerHandlerInterface
 {
