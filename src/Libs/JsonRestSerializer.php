@@ -2,7 +2,7 @@
 
 namespace PhpLab\Rest\Libs;
 
-use php7extension\yii\helpers\ArrayHelper;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Domain\Data\ArraySerializerHandlers\ArrayHandler;
 use PhpLab\Core\Domain\Data\ArraySerializerHandlers\ObjectHandler;
 use PhpLab\Core\Domain\Data\DataProviderEntity;
