@@ -5,7 +5,7 @@ namespace PhpLab\Rest\Libs\Serializer;
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Libs\Serializer\Handlers\ArrayHandler;
 use PhpLab\Core\Libs\Serializer\Handlers\ObjectHandler;
-use PhpLab\Core\Domain\Data\DataProviderEntity;
+use PhpLab\Core\Domain\Entities\DataProviderEntity;
 use PhpLab\Core\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Rest\Entities\ExceptionEntity;
 use PhpLab\Rest\Libs\Serializer\Handlers\TimeHandler;
