@@ -15,7 +15,11 @@
   },
   "autoload": {
     "psr-4": {
-      "PhpLab\\Rest\\": "src",
+      "PhpLab\\Rest\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "PhpLab\\Rest\\Tests\\": "tests"
     }
   }
