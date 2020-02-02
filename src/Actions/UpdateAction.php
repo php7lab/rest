@@ -3,7 +3,7 @@
 namespace PhpLab\Rest\Actions;
 
 use PhpLab\Core\Domain\Exceptions\UnprocessibleEntityException;
-use PhpLab\Rest\Libs\JsonRestSerializer;
+use PhpLab\Rest\Libs\Serializer\JsonRestSerializer;
 use PhpLab\Core\Exceptions\NotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

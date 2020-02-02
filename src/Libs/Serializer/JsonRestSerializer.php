@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpLab\Rest\Libs;
+namespace PhpLab\Rest\Libs\Serializer;
 
 use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
-use PhpLab\Core\Domain\Data\ArraySerializerHandlers\ArrayHandler;
-use PhpLab\Core\Domain\Data\ArraySerializerHandlers\ObjectHandler;
+use PhpLab\Core\Libs\Serializer\Handlers\ArrayHandler;
+use PhpLab\Core\Libs\Serializer\Handlers\ObjectHandler;
 use PhpLab\Core\Domain\Data\DataProviderEntity;
 use PhpLab\Core\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Rest\Entities\ExceptionEntity;
-use PhpLab\Rest\Libs\ArraySerializerHandlers\TimeHandler;
+use PhpLab\Rest\Libs\Serializer\Handlers\TimeHandler;
 use PhpLab\Core\Exceptions\NotFoundException;
 use PhpLab\Bundle\User\Domain\Exceptions\UnauthorizedException;
 use PhpLab\Core\Enums\Web\HttpHeaderEnum;

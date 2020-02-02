@@ -2,7 +2,7 @@
 
 namespace PhpLab\Rest\Controllers;
 
-use PhpLab\Rest\Libs\JsonRestSerializer;
+use PhpLab\Rest\Libs\Serializer\JsonRestSerializer;
 use PhpLab\Rest\Libs\RestApiHelper;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
