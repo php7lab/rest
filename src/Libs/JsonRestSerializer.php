@@ -11,7 +11,7 @@ use PhpLab\Rest\Entities\ExceptionEntity;
 use PhpLab\Rest\Libs\ArraySerializerHandlers\TimeHandler;
 use PhpLab\Core\Common\Exceptions\NotFoundException;
 use PhpLab\Sandbox\User\Domain\Exceptions\UnauthorizedException;
-use PhpLab\Core\Web\Enums\HttpHeaderEnum;
+use PhpLab\Core\Common\Enums\Web\HttpHeaderEnum;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
