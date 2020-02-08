@@ -7,6 +7,7 @@ class ProtoEntity
 
     public $statusCode;
     public $headers;
+    public $method;
     public $content;
     public $uri;
     public $query;

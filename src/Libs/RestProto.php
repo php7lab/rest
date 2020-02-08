@@ -3,6 +3,7 @@
 namespace PhpLab\Rest\Libs;
 
 use PhpLab\Bundle\Crypt\Libs\Encoders\EncoderInterface;
+use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Core\Enums\Http\HttpMethodEnum;
 use PhpLab\Core\Enums\Http\HttpServerEnum;
 use PhpLab\Rest\Entities\ProtoEntity;
@@ -30,20 +31,20 @@ class RestProto
         return $isCrypt;
     }
 
-    public function encodeResponse(Response $request): Response
+    public function encodeResponse(Response $response): Response
     {
         if ( ! $this->isCrypt()) {
-            return $request;
+            return $response;
         }
         $headers = [];
         $encodedResponse = new Response;
-        foreach ($request->headers->all() as $headerKey => $headerValue) {
+        foreach ($response->headers->all() as $headerKey => $headerValue) {
             $headers[$headerKey] = \PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper::first($headerValue);
         }
         $payload = [
-            'statusCode' => $request->getStatusCode(),
+            'statusCode' => $response->getStatusCode(),
             'headers' => $headers,
-            'content' => $request->getContent(),
+            'content' => $response->getContent(),
         ];
         $encodedContent = $this->encoderInstance->encode($payload);
         $encodedResponse->headers->set(self::CRYPT_HEADER_NAME, 1);
@@ -54,9 +55,18 @@ class RestProto
     public function decodeRequest(string $encodedData): ProtoEntity
     {
         $server = [];
-        $decodedData = $this->encoderInstance->decode($encodedData);
-        if ($decodedData['headers']) {
-            foreach ($decodedData['headers'] as $headerKey => $headerValue) {
+
+        $payload = $this->encoderInstance->decode($encodedData);
+
+        $protoEntity = new ProtoEntity;
+        EntityHelper::setAttributes($protoEntity, $payload);
+
+        $protoEntity->headers = $protoEntity->headers ?? [];
+        $protoEntity->query = $protoEntity->query ?? [];
+        $protoEntity->body = $protoEntity->body ?? [];
+
+        if ($protoEntity->headers) {
+            foreach ($protoEntity->headers as $headerKey => $headerValue) {
                 $headerKey = strtoupper($headerKey);
                 $headerKey = str_replace('-', '_', $headerKey);
                 $headerKey = 'HTTP_' . $headerKey;
@@ -64,14 +74,10 @@ class RestProto
             }
         }
 
-        $server[HttpServerEnum::REQUEST_METHOD] = HttpMethodEnum::value($decodedData['method'], HttpMethodEnum::GET);
-        $server[HttpServerEnum::REQUEST_URI] = $decodedData['uri'] ?? '/';
+        $server[HttpServerEnum::REQUEST_METHOD] = HttpMethodEnum::value($protoEntity->method, HttpMethodEnum::GET);
+        $server[HttpServerEnum::REQUEST_URI] = $protoEntity->uri ?? '/';
 
-        $protoEntity = new ProtoEntity;
-        $protoEntity->uri = $decodedData['uri'];
-        $protoEntity->headers = $decodedData['headers'] ?? [];
-        $protoEntity->query = $decodedData['query'] ?? [];
-        $protoEntity->body = $decodedData['body'] ?? [];
+
         $protoEntity->server = $server;
         return $protoEntity;
     }
