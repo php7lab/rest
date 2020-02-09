@@ -69,7 +69,7 @@ class RestProto
         global $_SERVER, $_GET, $_POST, $_FILES;
         $server = $this->forgeServer($requestEntity);
         $_SERVER = array_merge($_SERVER, $server);
-        $_GET = $requestEntity->getQuery();
+        $_GET = $requestEntity->getQuery() ?? [];
         $_POST = $requestEntity->getBody() ?? [];
     }
 
@@ -83,7 +83,7 @@ class RestProto
         $this->applyToEnv($requestEntity);
     }
 
-    private function forgeServer($requestEntity)
+    private function forgeServer(RequestEntity $requestEntity): array
     {
         $server = [];
         if ($requestEntity->getHeaders()) {
