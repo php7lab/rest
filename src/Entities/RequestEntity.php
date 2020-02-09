@@ -2,11 +2,7 @@
 
 namespace PhpLab\Rest\Entities;
 
-use PhpLab\Core\Enums\Http\HttpHeaderEnum;
 use PhpLab\Core\Enums\Http\HttpMethodEnum;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriInterface;
 
 class RequestEntity
 {
