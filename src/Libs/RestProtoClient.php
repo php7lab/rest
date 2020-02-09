@@ -9,8 +9,7 @@ use PhpLab\Bundle\Crypt\Libs\Encoders\EncoderInterface;
 use PhpLab\Core\Domain\Helpers\EntityHelper;
 use PhpLab\Core\Enums\Http\HttpHeaderEnum;
 use PhpLab\Core\Enums\Http\HttpMethodEnum;
-use PhpLab\Rest\Entities\ProtoEntity;
-use PhpLab\Rest\Entities\ProtoRequestEntity;
+use PhpLab\Rest\Entities\RequestEntity;
 use Psr\Http\Message\ResponseInterface;
 
 class RestProtoClient
@@ -27,7 +26,7 @@ class RestProtoClient
 
     public function request(string $method, string $uri, array $query = [], array $body = []): ResponseInterface
     {
-        $requestProtoEntity = new ProtoEntity;
+        $requestProtoEntity = new RequestEntity;
         $requestProtoEntity->setMethod($method);
         $requestProtoEntity->setUri($uri);
         $requestProtoEntity->withHeader(HttpHeaderEnum::CONTENT_TYPE, 'application/x-base64');

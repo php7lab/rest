@@ -15,8 +15,7 @@ class RequestEntity
     private $method = HttpMethodEnum::GET;
     private $uri = '/';
     private $query = [];
-    private $body = [];
-    private $server;
+    private $body;
 
     public function getHeaders()
     {
@@ -71,16 +70,6 @@ class RequestEntity
     public function setBody($body): void
     {
         $this->body = $body;
-    }
-
-    public function getServer()
-    {
-        return $this->server;
-    }
-
-    public function setServer($server): void
-    {
-        $this->server = $server;
     }
 
 }
