@@ -2,8 +2,11 @@
 
 namespace PhpLab\Rest\Libs;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use PhpLab\Bundle\Crypt\Libs\Encoders\EncoderInterface;
 use PhpLab\Core\Domain\Helpers\EntityHelper;
+use PhpLab\Core\Enums\Http\HttpHeaderEnum;
 use PhpLab\Core\Enums\Http\HttpMethodEnum;
 use PhpLab\Core\Enums\Http\HttpServerEnum;
 use PhpLab\Rest\Entities\ProtoEntity;
@@ -14,6 +17,7 @@ class RestProto
 
     const CRYPT_SERVER_NAME = 'HTTP_X_CRYPT';
     const CRYPT_HEADER_NAME = 'X-Crypt';
+    const CRYPT_CONTENT_TYPE = 'application/x-base64';
 
     private $encoderInstance;
     private $originalServer;
@@ -22,6 +26,21 @@ class RestProto
     {
         $this->encoderInstance = $encoder;
         $this->originalServer = $server;
+    }
+
+    public function sendRequest(string $endpoint, ProtoEntity $protoEntity) {
+        $encodedRequest = $this->encoderInstance->encode($protoEntity);
+        $client = new Client;
+        $response = $client->request(HttpMethodEnum::POST, $endpoint, [
+            RequestOptions::HEADERS => [
+                RestProto::CRYPT_HEADER_NAME => 1,
+                HttpHeaderEnum::CONTENT_TYPE => self::CRYPT_CONTENT_TYPE,
+            ],
+            RequestOptions::FORM_PARAMS => [
+                'data' => $encodedRequest,
+            ],
+        ]);
+        return $response;
     }
 
     public function isCrypt(): bool
