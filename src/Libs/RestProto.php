@@ -3,6 +3,8 @@
 namespace PhpLab\Rest\Libs;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
 use PhpLab\Bundle\Crypt\Libs\Encoders\EncoderInterface;
 use PhpLab\Core\Domain\Helpers\EntityHelper;
@@ -10,6 +12,7 @@ use PhpLab\Core\Enums\Http\HttpHeaderEnum;
 use PhpLab\Core\Enums\Http\HttpMethodEnum;
 use PhpLab\Core\Enums\Http\HttpServerEnum;
 use PhpLab\Rest\Entities\ProtoEntity;
+use PhpLab\Rest\Entities\RequestEntity;
 use Symfony\Component\HttpFoundation\Response;
 
 class RestProto
@@ -71,52 +74,51 @@ class RestProto
         return $encodedResponse;
     }
 
-    public function decodeRequest(string $encodedData): ProtoEntity
+    public function decodeRequest(string $encodedData): RequestEntity
     {
-        $server = [];
-
         $payload = $this->encoderInstance->decode($encodedData);
+        //file_put_contents(__DIR__ . '/dfdfdfdf.json', json_encode($payload));
+        // {"headers":{"Content-Type":"application\/x-base64"},"method":"GET","uri":"\/api\/v1\/article","query":{"category_id":2,"per-page":3},"body":[],"server":null}
+        $requestEntity = new RequestEntity;
+        EntityHelper::setAttributes($requestEntity, $payload);
 
-        $protoEntity = new ProtoEntity;
-        EntityHelper::setAttributes($protoEntity, $payload);
+        /*$uri = new Uri($payload['uri']);
+        $request = new Request($payload['method'], $uri, $payload['headers']);*/
+        return $requestEntity;
+    }
 
-        $protoEntity->headers = $protoEntity->headers ?? [];
-        $protoEntity->query = $protoEntity->query ?? [];
-        $protoEntity->body = $protoEntity->body ?? [];
+    public function applyToEnv(RequestEntity $requestEntity)
+    {
+        global $_SERVER, $_GET, $_POST, $_FILES;
+        $server = $this->forgeServer($requestEntity);
+        $_SERVER = array_merge($_SERVER, $server);
+        $_GET = $requestEntity->getQuery();
+        $_POST = $requestEntity->getBody();
+    }
 
-        if ($protoEntity->headers) {
-            foreach ($protoEntity->headers as $headerKey => $headerValue) {
+    public function prepareRequest()
+    {
+        global $_POST;
+        if ( ! $this->isCrypt()) {
+            return;
+        }
+        $requestEntity = $this->decodeRequest($_POST['data']);
+        $this->applyToEnv($requestEntity);
+    }
+
+    private function forgeServer($requestEntity) {
+        $server = [];
+        if ($requestEntity->getHeaders()) {
+            foreach ($requestEntity->getHeaders() as $headerKey => $headerValue) {
                 $headerKey = strtoupper($headerKey);
                 $headerKey = str_replace('-', '_', $headerKey);
                 $headerKey = 'HTTP_' . $headerKey;
                 $server[$headerKey] = $headerValue;
             }
         }
-
-        $server[HttpServerEnum::REQUEST_METHOD] = HttpMethodEnum::value($protoEntity->method, HttpMethodEnum::GET);
-        $server[HttpServerEnum::REQUEST_URI] = $protoEntity->uri ?? '/';
-
-
-        $protoEntity->server = $server;
-        return $protoEntity;
-    }
-
-    public function applyToEnv(ProtoEntity $protoEntity)
-    {
-        global $_SERVER, $_GET, $_POST, $_FILES;
-        $_SERVER = array_merge($_SERVER, $protoEntity->server);
-        $_GET = $protoEntity->query;
-        $_POST = $protoEntity->body;
-    }
-
-    public function prepareRequest()
-    {
-        global $_SERVER, $_GET, $_POST;
-        if ( ! $this->isCrypt()) {
-            return;
-        }
-        $protoEntity = $this->decodeRequest($_POST['data']);
-        $this->applyToEnv($protoEntity);
+        $server[HttpServerEnum::REQUEST_METHOD] = HttpMethodEnum::value($requestEntity->getMethod(), HttpMethodEnum::GET);
+        $server[HttpServerEnum::REQUEST_URI] = $requestEntity->getUri();
+        return $server;
     }
 
 }
