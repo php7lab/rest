@@ -47,11 +47,11 @@ class RestApiControllerHelper
     public static function runAll(Request $request, RouteCollection $routes, array $controllers, $context = '/'): Response
     {
         try {
-            $routeEntity = RestHelper::match($request, $routes, $context);
+            $routeEntity = self::match($request, $routes, $context);
             $controllerInstance = $controllers[$routeEntity->controllerClassName];
-            $response = RestHelper::run($controllerInstance, $request, $routes);
+            $response = self::run($controllerInstance, $request, $routes);
         } catch (ResourceNotFoundException $e) {
-            $response = RestHelper::getResponseByStatusCode(HttpStatusCodeEnum::NOT_FOUND);
+            $response = self::getResponseByStatusCode(HttpStatusCodeEnum::NOT_FOUND);
         }
         return $response;
     }
@@ -66,12 +66,12 @@ class RestApiControllerHelper
 
     private static function run(object $controllerInstance, Request $request, RouteCollection $routes, $context = '/'): Response
     {
-        $routeEntity = RestHelper::match($request, $routes, $context);
+        $routeEntity = self::match($request, $routes, $context);
         $callback = [$controllerInstance, $routeEntity->actionName];
         try {
             $response = call_user_func_array($callback, $routeEntity->actionParameters);
         } catch (Throwable $e) {
-            $response = RestHelper::handleException($e);
+            $response = self::handleException($e);
         }
         return $response;
     }
