@@ -52,7 +52,7 @@ class RestResponseHelper
 
     public static function extractHeaderValues(ResponseInterface $response, string $name)
     {
-        $value= $response->getHeaderLine($name);
+        $value = $response->getHeaderLine($name);
         if (empty($value)) {
             return [];
         }
