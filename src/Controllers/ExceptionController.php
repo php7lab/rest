@@ -2,8 +2,8 @@
 
 namespace PhpLab\Rest\Controllers;
 
+use PhpLab\Rest\Helpers\RestHelper;
 use PhpLab\Rest\Libs\Serializer\JsonRestSerializer;
-use PhpLab\Rest\Libs\RestApiHelper;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +14,7 @@ class ExceptionController extends \Symfony\Bundle\TwigBundle\Controller\Exceptio
 
     public function showException(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null)
     {
-        $isApi = RestApiHelper::parseVersionFromUrl($request->getRequestUri());
+        $isApi = RestHelper::parseVersionFromUrl($request->getRequestUri());
         if ($isApi) {
             $response = new JsonResponse;
             $serializer = new JsonRestSerializer($response);

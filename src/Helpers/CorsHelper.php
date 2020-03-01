@@ -4,10 +4,10 @@ namespace PhpLab\Rest\Helpers;
 
 use php7extension\yii\filters\Cors;
 use php7rails\app\helpers\EnvService;
-use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use PhpLab\Core\Enums\Http\HttpHeaderEnum;
 use PhpLab\Core\Enums\Http\HttpMethodEnum;
 use PhpLab\Core\Enums\Http\HttpServerEnum;
+use PhpLab\Core\Legacy\Yii\Helpers\ArrayHelper;
 use Symfony\Component\HttpFoundation\Response;
 
 class CorsHelper

@@ -9,27 +9,25 @@ use PhpLab\Rest\Entities\RouteEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use PhpLab\Core\Enums\Http\HttpHeaderEnum;
-use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+use Throwable;
 
 class RestHelper
 {
 
-    public static function getDataFromResponse(ResponseInterface $response)
+    public static function parseVersionFromUrl(string $uri)
     {
-        $contentType = $response->getHeaderLine(HttpHeaderEnum::CONTENT_TYPE);
-        $data = $response->getBody()->getContents();
-        if($contentType == 'application/json') {
-            $data = json_decode($data, true);
+        $uri = trim($uri, '/');
+        $isApi = preg_match('/^api\/v(\d+)\//', $uri, $matches);
+        if ( ! $isApi) {
+            return false;
         }
-        return $data;
+        return $matches[1];
     }
 
     public static function defineCrudRoutes(string $endpoint, string $controllerClassName): RouteCollection
