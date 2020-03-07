@@ -10,7 +10,7 @@ use PhpLab\Core\Domain\Exceptions\UnprocessibleEntityException;
 use PhpLab\Rest\Entities\ExceptionEntity;
 use PhpLab\Rest\Libs\Serializer\Handlers\TimeHandler;
 use PhpLab\Core\Exceptions\NotFoundException;
-use PhpLab\Bundle\User\Domain\Exceptions\UnauthorizedException;
+use PhpBundle\User\Domain\Exceptions\UnauthorizedException;
 use PhpLab\Core\Enums\Http\HttpHeaderEnum;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
