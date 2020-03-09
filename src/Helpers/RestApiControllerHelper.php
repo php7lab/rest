@@ -2,9 +2,7 @@
 
 namespace PhpLab\Rest\Helpers;
 
-use PhpLab\Core\Enums\Http\HttpMethodEnum;
 use PhpLab\Core\Enums\Http\HttpStatusCodeEnum;
-use PhpLab\Core\Legacy\Yii\Helpers\Inflector;
 use PhpLab\Rest\Entities\RouteEntity;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,61 +12,41 @@ use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Throwable;
 
 class RestApiControllerHelper
 {
 
-    public static function defineCrudRoutes(string $endpoint, string $controllerClassName): RouteCollection
+    public static function send(RouteCollection $routeCollection, ContainerInterface $container, $context = '/', Request $request = null)
     {
-        $routeNamePrefix = self::extractRoutePrefix($controllerClassName);
-
-        $endpoint = '/' . trim($endpoint, '/');
-        $routes = new RouteCollection;
-
-        $route = new Route($endpoint . '/{id}', ['_controller' => $controllerClassName, '_action' => 'view'], ['id'], [], null, [], [HttpMethodEnum::GET]);
-        $routes->add($routeNamePrefix . '_view', $route);
-
-        $route = new Route($endpoint . '/{id}', ['_controller' => $controllerClassName, '_action' => 'delete'], ['id'], [], null, [], [HttpMethodEnum::DELETE]);
-        $routes->add($routeNamePrefix . '_delete', $route);
-
-        $route = new Route($endpoint . '/{id}', ['_controller' => $controllerClassName, '_action' => 'update'], ['id'], [], null, [], [HttpMethodEnum::PUT]);
-        $routes->add($routeNamePrefix . '_update', $route);
-
-        $route = new Route($endpoint, ['_controller' => $controllerClassName, '_action' => 'index'], [], [], null, [], [HttpMethodEnum::GET]);
-        $routes->add($routeNamePrefix . '_index', $route);
-
-        $route = new Route($endpoint, ['_controller' => $controllerClassName, '_action' => 'create'], [], [], null, [], [HttpMethodEnum::POST]);
-        $routes->add($routeNamePrefix . '_create', $route);
-        return $routes;
+        $request = $request ?? Request::createFromGlobals();
+        $response = self::run($routeCollection, $container, $context);
+        $response->send();
     }
 
-    public static function runAll(Request $request, RouteCollection $routes, ContainerInterface $container, $context = '/'): Response
+    public static function run(RouteCollection $routeCollection, ContainerInterface $container, $context = '/', Request $request = null): Response
+    {
+        $request = $request ?? Request::createFromGlobals();
+        $response = RestApiControllerHelper::runAll($request, $routeCollection, $container, $context);
+        return $response;
+    }
+
+    private static function runAll(Request $request, RouteCollection $routeCollection, ContainerInterface $container, $context = '/'): Response
     {
         try {
-            $routeEntity = self::match($request, $routes, $context);
-            //$controllerInstance = $controllers[$routeEntity->controllerClassName];
+            $routeEntity = self::match($request, $routeCollection, $context);
             $controllerInstance = $container->get($routeEntity->controllerClassName);
-            $response = self::run($controllerInstance, $request, $routes);
+            $response = self::runController($controllerInstance, $request, $routeCollection);
         } catch (ResourceNotFoundException $e) {
             $response = self::getResponseByStatusCode(HttpStatusCodeEnum::NOT_FOUND);
         }
         return $response;
     }
 
-    private static function extractRoutePrefix(string $controllerClassName): string
+    private static function runController(object $controllerInstance, Request $request, RouteCollection $routeCollection, $context = '/'): Response
     {
-        $controllerClass = basename($controllerClassName);
-        $controllerClass = str_replace('Controller', '', $controllerClass);
-        $routeNamePrefix = Inflector::underscore($controllerClass);
-        return $routeNamePrefix;
-    }
-
-    private static function run(object $controllerInstance, Request $request, RouteCollection $routes, $context = '/'): Response
-    {
-        $routeEntity = self::match($request, $routes, $context);
+        $routeEntity = self::match($request, $routeCollection, $context);
         $callback = [$controllerInstance, $routeEntity->actionName];
         try {
             $response = call_user_func_array($callback, $routeEntity->actionParameters);
@@ -78,10 +56,10 @@ class RestApiControllerHelper
         return $response;
     }
 
-    private static function match(Request $request, RouteCollection $routes, $context = '/'): RouteEntity
+    private static function match(Request $request, RouteCollection $routeCollection, $context = '/'): RouteEntity
     {
         $requestContext = new RequestContext($context);
-        $matcher = new UrlMatcher($routes, $requestContext);
+        $matcher = new UrlMatcher($routeCollection, $requestContext);
         $parameters = $matcher->match($request->getPathInfo());
         $routeEntity = new RouteEntity;
         $routeEntity->controllerClassName = $parameters['_controller'];
