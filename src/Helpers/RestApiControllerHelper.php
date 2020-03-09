@@ -6,6 +6,7 @@ use PhpLab\Core\Enums\Http\HttpMethodEnum;
 use PhpLab\Core\Enums\Http\HttpStatusCodeEnum;
 use PhpLab\Core\Legacy\Yii\Helpers\Inflector;
 use PhpLab\Rest\Entities\RouteEntity;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,11 +45,12 @@ class RestApiControllerHelper
         return $routes;
     }
 
-    public static function runAll(Request $request, RouteCollection $routes, array $controllers, $context = '/'): Response
+    public static function runAll(Request $request, RouteCollection $routes, ContainerInterface $container, $context = '/'): Response
     {
         try {
             $routeEntity = self::match($request, $routes, $context);
-            $controllerInstance = $controllers[$routeEntity->controllerClassName];
+            //$controllerInstance = $controllers[$routeEntity->controllerClassName];
+            $controllerInstance = $container->get($routeEntity->controllerClassName);
             $response = self::run($controllerInstance, $request, $routes);
         } catch (ResourceNotFoundException $e) {
             $response = self::getResponseByStatusCode(HttpStatusCodeEnum::NOT_FOUND);
