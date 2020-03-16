@@ -3,6 +3,7 @@
 namespace PhpLab\Rest\Contract\Client;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use PhpLab\Core\Enums\Http\HttpHeaderEnum;
@@ -91,6 +92,9 @@ class RestClient
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if (is_object($this->authAgent)) {
+                if($response == null) {
+                    throw new \Exception('Url not found!');
+                }
                 if ($response->getStatusCode() == HttpStatusCodeEnum::UNAUTHORIZED && $refreshAuthToken) {
                     $this->authAgent->authorization();
                     return $this->sendRequest($method, $uri, $options, false);
