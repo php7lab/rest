@@ -40,8 +40,12 @@ class RestResponseHelper
 
     public static function getBody(ResponseInterface $response, string $body)
     {
-        $contentType = self::extractHeaderValues($response, 'content-type');
-        $extension = self::mimeToFileExtension($contentType[0]);
+        $contentTypeItems = self::extractHeaderValues($response, 'content-type');
+        if($contentTypeItems) {
+            $extension = self::mimeToFileExtension($contentTypeItems[0]);
+        } else {
+            $extension = null;
+        }
         if ($extension == 'php' || empty($extension)) {
             $extension = 'html';
         }

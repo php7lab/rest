@@ -13,14 +13,13 @@ class IndexAction extends BaseAction
     public function run(): JsonResponse
     {
         $response = new JsonResponse;
-        $dp = new DataProvider([
-            'service' => $this->service,
-            'query' => $this->query,
-            'page' => $this->request->get("page", 1),
-            'pageSize' => $this->request->get("per-page", 10),
-        ]);
+
+        $page = $this->request->get("page", 1);
+        $pageSize = $this->request->get("per-page", 10);
+        $dataProvider = new DataProvider($this->service, $this->query, $page, $pageSize);
+
         $serializer = new JsonRestSerializer($response);
-        $serializer->serializeDataProviderEntity($dp->getAll());
+        $serializer->serializeDataProviderEntity($dataProvider->getAll());
         return $response;
     }
 
