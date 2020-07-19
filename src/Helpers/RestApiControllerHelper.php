@@ -2,6 +2,7 @@
 
 namespace PhpLab\Rest\Helpers;
 
+use Illuminate\Container\Container;
 use PhpLab\Core\Enums\Http\HttpStatusCodeEnum;
 use PhpLab\Rest\Entities\RouteEntity;
 use Psr\Container\ContainerInterface;
@@ -18,22 +19,22 @@ use Throwable;
 class RestApiControllerHelper
 {
 
-    public static function send(RouteCollection $routeCollection, ContainerInterface $container, $context = '/', Request $request = null)
+    public static function send(RouteCollection $routeCollection, ContainerInterface $container, $context = '/')
     {
-        $request = $request ?? Request::createFromGlobals();
+        //$request = $request ?? Request::createFromGlobals();
         $response = self::run($routeCollection, $container, $context);
         $response->send();
     }
 
-    public static function run(RouteCollection $routeCollection, ContainerInterface $container, $context = '/', Request $request = null): Response
+    public static function run(RouteCollection $routeCollection, ContainerInterface $container, $context = '/'): Response
     {
-        $request = $request ?? Request::createFromGlobals();
-        $response = RestApiControllerHelper::runAll($request, $routeCollection, $container, $context);
+        $response = RestApiControllerHelper::runAll($routeCollection, $container, $context);
         return $response;
     }
 
-    private static function runAll(Request $request, RouteCollection $routeCollection, ContainerInterface $container, $context = '/'): Response
+    private static function runAll(RouteCollection $routeCollection, ContainerInterface $container, $context = '/'): Response
     {
+        $request = $container->get(Request::class);
         try {
             $routeEntity = self::match($request, $routeCollection, $context);
             $controllerInstance = $container->get($routeEntity->controllerClassName);
@@ -44,12 +45,23 @@ class RestApiControllerHelper
         return $response;
     }
 
+    public static function prepareContent(Request $request) {
+        if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+            $data = json_decode($request->getContent(), true);
+            $request->request->replace(is_array($data) ? $data : array());
+            //dd($request->request->all());
+        }
+    }
+
     private static function runController(object $controllerInstance, Request $request, RouteCollection $routeCollection, $context = '/'): Response
     {
         $routeEntity = self::match($request, $routeCollection, $context);
         $callback = [$controllerInstance, $routeEntity->actionName];
         try {
-            $response = call_user_func_array($callback, $routeEntity->actionParameters);
+            $container = Container::getInstance();
+            $response = $container->call([$controllerInstance, $routeEntity->actionName], $routeEntity->actionParameters);
+
+            //$response = call_user_func_array($callback, $routeEntity->actionParameters);
         } catch (Throwable $e) {
             $response = self::handleException($e);
         }
@@ -67,7 +79,7 @@ class RestApiControllerHelper
         if (in_array($routeEntity->actionName, ['view', 'update', 'delete'])) {
             $id = $parameters['id'];
             $routeEntity->actionParameters = [$id, $request];
-        } elseif (in_array($routeEntity->actionName, ['index', 'create'])) {
+        } else {
             $routeEntity->actionParameters = [$request];
         }
         return $routeEntity;

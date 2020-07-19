@@ -7,6 +7,6 @@ class RouteEntity
 
     public $controllerClassName;
     public $actionName;
-    public $actionParameters;
+    public $actionParameters = [];
 
 }

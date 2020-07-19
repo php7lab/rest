@@ -43,7 +43,7 @@ class RestApiRouteHelper
         $routeCollection->add($routeName, $route);
     }
 
-    private static function extractRoutePrefix(string $controllerClassName): string
+    public static function extractRoutePrefix(string $controllerClassName): string
     {
         $controllerClass = basename($controllerClassName);
         $controllerClass = str_replace('Controller', '', $controllerClass);
