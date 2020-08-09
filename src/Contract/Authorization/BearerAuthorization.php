@@ -49,15 +49,18 @@ class BearerAuthorization implements AuthorizationInterface
         if (empty($this->currentAuth['login'])) {
             return null;
         }
+
         /** @var CacheItem $cacheItem */
         $cacheItem = $this->authCache->getItem('token_by_login_' . $this->currentAuth['login']);
         $authToken = $cacheItem->get();
 
         if ($authToken) {
-            return $authToken;
+
         } else {
-            return $this->authorization();
+            $authToken = $this->authorization();
+            //$this->setAuthToken($authToken);
         }
+        return $authToken;
     }
 
     public function authorization()

@@ -17,6 +17,8 @@ class RestClient
 
     private $guzzleClient;
     private $accept = 'application/json';
+
+    /** @var AuthorizationInterface */
     private $authAgent;
 
     public function __construct(Client $guzzleClient, AuthorizationInterface $authAgent = null)
